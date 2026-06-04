@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>HAPPY BIRTHDAY MIGGA 🎂</title>
+<style>
+:root {
+  --red:#ff003c; --orange:#ff6a00; --yellow:#ffe600;
+  --green:#00ff88; --blue:#00c3ff; --purple:#b200ff; --pink:#ff00aa;
+  --bg:#05050e; --glass:rgba(12,12,24,0.85); --gborder:rgba(255,255,255,0.09);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html,body{width:100%;height:100%;background:var(--bg);font-family:-apple-system,'Segoe UI',sans-serif;}
+body{display:flex;flex-direction:column;overflow:hidden;}
+
+/* BG */
+#bgc{position:fixed;inset:0;z-index:0;pointer-events:none;}
+
+/* FLASH */
+#flash{position:fixed;inset:0;z-index:5;pointer-events:none;background:var(--red);opacity:0;animation:flashA 2.4s infinite;}
+@keyframes flashA{0%,44%,56%,100%{opacity:0}49%,51%{opacity:.07}}
+
+/* ACHIEVEMENT */
+#ach{
+  position:fixed;top:80px;left:50%;transform:translateX(-50%) translateY(-160px);
+  z-index:999;width:88%;max-width:340px;
+  background:linear-gradient(135deg,#ffd700,#ff6a00);
+  color:#000;border-radius:16px;padding:16px 20px;text-align:center;
+  box-shadow:0 0 40px rgba(255,215,0,.7);
+  transition:transform .55s cubic-bezier(.34,1.56,.64,1),opacity .55s;opacity:0;
+}
+#ach.show{transform:translateX(-50%) translateY(0);opacity:1;}
+#ach .ai{font-size:30px;display:block;margin-bottom:4px;}
+#ach .at{font-size:9px;font-weight:900;letter-spacing:3px;opacity:.65;}
+#ach .an{font-size:15px;font-weight:900;margin-top:3px;}
+
+/* SLIDE AREA */
+#wrap{flex:1;position:relative;overflow:hidden;z-index:1;}
+
+.slide{
+  position:absolute;top:0;left:0;right:0;bottom:0;
+  overflow-y:auto;overflow-x:hidden;
+  -webkit-overflow-scrolling:touch;
+  padding:16px 14px 20px;
+  display:flex;flex-direction:column;align-items:center;gap:12px;
+  transform:translateX(100%);
+  transition:transform .46s cubic-bezier(.77,0,.175,1);
+}
+.slide::-webkit-scrollbar{display:none;}
+.slide.active{transform:translateX(0);}
+.slide.prev{transform:translateX(-100%);}
+
+/* NAV BAR */
+#nav{
+  width:100%;height:68px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:8px 18px 12px;
+  background:rgba(5,5,14,0.97);
+  border-top:1px solid rgba(255,255,255,0.08);
+  z-index:10;position:relative;
+}
+.nb{
+  background:rgba(255,255,255,0.07);
+  border:1.5px solid rgba(255,255,255,0.18);
+  color:#fff;font-size:14px;font-weight:800;
+  padding:11px 24px;border-radius:50px;
+  cursor:pointer;font-family:inherit;letter-spacing:1px;
+  -webkit-appearance:none;appearance:none;
+  transition:opacity .15s,transform .15s;
+  min-width:90px;text-align:center;
+}
+.nb:active{transform:scale(0.93);}
+.nb.acc{
+  background:linear-gradient(135deg,#ff003c,#b200ff);
+  border-color:transparent;
+  box-shadow:0 0 18px rgba(255,0,60,.5);
+}
+.nb:disabled{opacity:.28;pointer-events:none;}
+#dots{display:flex;gap:7px;align-items:center;}
+.dot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.2);transition:all .3s;}
+.dot.on{width:20px;border-radius:4px;background:var(--red);box-shadow:0 0 8px var(--red);}
+
+/* SHARED */
+.card{
+  background:var(--glass);border:1px solid var(--gborder);
+  border-radius:20px;padding:16px;width:100%;
+  box-shadow:0 8px 32px rgba(0,0,0,.5);
+}
+@keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+@keyframes bob{0%,100%{transform:scale(1)}50%{transform:scale(1.025)}}
+
+/* ═══ SLIDE 1 ═══ */
+.badge{
+  width:100%;background:linear-gradient(135deg,#ff003c,#ff6a00);
+  color:#fff;font-size:10px;font-weight:900;padding:8px 18px;
+  border-radius:6px;letter-spacing:3px;text-align:center;
+  box-shadow:0 0 22px rgba(255,0,60,.8);
+  animation:bpulse .9s ease-in-out infinite alternate;
+}
+@keyframes bpulse{from{box-shadow:0 0 12px rgba(255,0,60,.6)}to{box-shadow:0 0 36px rgba(255,0,60,1),0 0 60px rgba(255,106,0,.4)}}
+
+.mtitle{
+  font-size:clamp(38px,12vw,58px);font-weight:900;line-height:1.05;text-align:center;
+  background:linear-gradient(135deg,#ffe600,#ff6a00,#ff003c,#ffe600);
+  background-size:300%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  animation:tshift 3s linear infinite;
+  filter:drop-shadow(0 0 14px rgba(255,200,0,.5));
+}
+@keyframes tshift{0%{background-position:0%}100%{background-position:300%}}
+
+.wcard{
+  width:100%;border:2px solid var(--red);border-radius:18px;
+  background:rgba(255,0,60,.07);padding:15px;
+  animation:wglow 1.3s ease-in-out infinite alternate;
+}
+@keyframes wglow{from{box-shadow:0 0 12px rgba(255,0,60,.2)}to{box-shadow:0 0 32px rgba(255,0,60,.55)}}
+.whead{font-size:11px;font-weight:900;letter-spacing:2px;color:var(--red);text-align:center;text-shadow:0 0 10px var(--red);margin-bottom:8px;}
+.wsub{font-size:14px;font-weight:700;color:#ffcc00;text-align:center;line-height:1.4;margin-bottom:12px;}
+.charges{list-style:none;display:flex;flex-direction:column;gap:7px;}
+.ch{
+  display:flex;align-items:center;gap:10px;
+  background:rgba(255,0,60,.08);border:1px solid rgba(255,0,60,.18);
+  border-radius:10px;padding:9px 12px;font-size:13px;font-weight:600;color:#fff;
+  animation:chin .5s ease both;
+}
+.ch:nth-child(1){animation-delay:.05s}.ch:nth-child(2){animation-delay:.15s}
+.ch:nth-child(3){animation-delay:.25s}.ch:nth-child(4){animation-delay:.35s}
+.ch:nth-child(5){animation-delay:.45s}
+@keyframes chin{from{opacity:0;transform:translateX(-18px)}to{opacity:1;transform:none}}
+
+.mbox{width:100%;border-radius:16px;background:rgba(255,255,255,.03);border:1px solid var(--gborder);padding:16px;text-align:center;animation:bob 2.2s ease-in-out infinite;}
+
+/* ═══ SLIDE 2 ═══ */
+.si{width:100%;display:flex;flex-direction:column;gap:5px;margin-bottom:2px;}
+.sl{display:flex;justify-content:space-between;font-size:13px;font-weight:700;color:#fff;}
+.sv{font-family:monospace;font-size:11px;}
+.sbg{width:100%;height:9px;background:rgba(255,255,255,.07);border-radius:5px;overflow:hidden;}
+.sf{height:100%;width:0%;border-radius:5px;transition:width 1.5s cubic-bezier(.23,1,.32,1) .2s;position:relative;overflow:hidden;}
+.sf::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.28),transparent);animation:shim 1.6s infinite;}
+@keyframes shim{from{transform:translateX(-100%)}to{transform:translateX(100%)}}
+.fi{background:linear-gradient(90deg,#ff003c,#ff6a00);}
+.fl{background:linear-gradient(90deg,#00ff88,#00c3ff);}
+.fb{background:linear-gradient(90deg,#ffe600,#ff6a00);}
+.fr{background:linear-gradient(90deg,#b200ff,#ff00aa);}
+.fe{background:linear-gradient(90deg,#ff0000,#550000);animation:ef .6s infinite;}
+.fm{background:linear-gradient(90deg,#555,#333);}
+@keyframes ef{50%{opacity:0}}
+
+.rbtn{
+  width:100%;background:linear-gradient(135deg,#b200ff,#ff00aa);
+  border:none;color:#fff;font-size:14px;font-weight:900;
+  padding:16px;border-radius:14px;cursor:pointer;
+  letter-spacing:2px;font-family:inherit;
+  box-shadow:0 0 24px rgba(178,0,255,.5);
+  -webkit-appearance:none;appearance:none;
+}
+.rbtn:active{transform:scale(0.96);}
+.rout{
+  width:100%;display:none;background:rgba(178,0,255,.09);
+  border:1px solid rgba(178,0,255,.3);border-radius:14px;padding:16px;
+  font-size:15px;font-weight:600;color:#fff;line-height:1.55;text-align:center;
+  animation:rpop .4s cubic-bezier(.34,1.56,.64,1) both;
+}
+@keyframes rpop{from{opacity:0;transform:scale(.82) translateY(10px)}to{opacity:1;transform:none}}
+.rout.show{display:block;}
+
+/* ═══ SLIDE 3 ═══ */
+.ctitle{font-size:40px;font-weight:900;color:#fff;text-align:center;letter-spacing:4px;text-shadow:0 0 24px rgba(255,0,60,.9);margin-top:8px;}
+.csub{font-size:10px;font-weight:700;letter-spacing:3px;color:rgba(255,255,255,.35);text-align:center;}
+
+#cbtn{
+  width:155px;height:155px;border-radius:50%;flex-shrink:0;
+  background:radial-gradient(circle,#ff1a1a,#8b0000);
+  border:4px solid var(--red);color:#fff;
+  font-size:19px;font-weight:900;letter-spacing:2px;line-height:1.3;
+  cursor:pointer;position:relative;overflow:hidden;
+  box-shadow:0 0 32px rgba(255,0,60,.65),0 0 70px rgba(255,0,60,.3),inset 0 0 22px rgba(0,0,0,.5);
+  animation:bpulse2 2s ease-in-out infinite;font-family:inherit;
+  -webkit-appearance:none;appearance:none;
+}
+#cbtn::before{content:'';position:absolute;inset:-60%;background:conic-gradient(transparent 270deg,rgba(255,255,255,.18) 360deg);animation:spin 3s linear infinite;}
+@keyframes bpulse2{0%,100%{box-shadow:0 0 32px rgba(255,0,60,.65),0 0 70px rgba(255,0,60,.3)}50%{box-shadow:0 0 55px rgba(255,0,60,.95),0 0 110px rgba(255,0,60,.5)}}
+#cbtn:active{transform:scale(0.91);}
+
+.term{
+  width:100%;background:rgba(0,20,10,.75);
+  border:1px solid rgba(0,255,136,.18);border-radius:14px;padding:14px;
+  max-height:190px;overflow-y:auto;scrollbar-width:none;
+}
+.term::-webkit-scrollbar{display:none;}
+.tl{font-family:monospace;font-size:12px;color:#00ff88;margin-bottom:5px;line-height:1.4;animation:tlin .3s ease both;}
+@keyframes tlin{from{opacity:0;transform:translateX(-8px)}to{opacity:1;transform:none}}
+
+.fly{position:fixed;pointer-events:none;z-index:250;font-size:30px;animation:flyup 2.6s ease-out forwards;}
+@keyframes flyup{0%{opacity:1;transform:translateY(0) rotate(0) scale(1)}100%{opacity:0;transform:translateY(-85vh) rotate(720deg) scale(.4)}}
+.conf{position:fixed;pointer-events:none;z-index:240;border-radius:2px;animation:cfall linear forwards;}
+@keyframes cfall{0%{opacity:1;transform:translateY(-20px) rotate(0)}100%{opacity:0;transform:translateY(105vh) rotate(800deg)}}
+@keyframes shake{0%,100%{transform:none}10%{transform:translate(-7px,-5px) rotate(-.6deg)}20%{transform:translate(7px,5px) rotate(.6deg)}30%{transform:translate(-9px,3px) rotate(-1deg)}40%{transform:translate(9px,-3px) rotate(1deg)}50%{transform:translate(-5px,7px) rotate(-.6deg)}60%{transform:translate(5px,-7px) rotate(.6deg)}70%{transform:translate(-7px,1px)}80%{transform:translate(7px,5px) rotate(.5deg)}90%{transform:translate(-5px,-5px) rotate(-.5deg)}}
+.shaking{animation:shake .55s ease both;}
+@keyframes rave{0%{background:rgba(255,0,60,.18)}16%{background:rgba(255,106,0,.18)}33%{background:rgba(255,230,0,.18)}50%{background:rgba(0,255,136,.18)}66%{background:rgba(0,195,255,.18)}83%{background:rgba(178,0,255,.18)}100%{background:rgba(255,0,60,.18)}}
+.raving{animation:rave .35s linear infinite;}
+
+/* ═══ SLIDE 4 ═══ */
+#slide-4{justify-content:center;}
+.cwrap{position:relative;width:120px;height:120px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.cglow{position:absolute;width:110px;height:110px;border-radius:50%;background:radial-gradient(circle,rgba(255,200,0,.4),transparent 70%);animation:cga 3s ease-in-out infinite;}
+@keyframes cga{0%,100%{opacity:.4;transform:scale(1)}50%{opacity:.9;transform:scale(1.35)}}
+.cem{font-size:80px;animation:cfloat 3.2s ease-in-out infinite;display:block;}
+@keyframes cfloat{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-14px) rotate(3deg)}}
+
+.fname{
+  font-size:36px;font-weight:900;line-height:1.2;text-align:center;
+  background:linear-gradient(135deg,#ff9900,#ff003c,#ff9900);background-size:200%;
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  animation:ns 4s linear infinite;filter:drop-shadow(0 0 14px rgba(255,150,0,.4));
+}
+@keyframes ns{0%,100%{background-position:0%}50%{background-position:200%}}
+
+.fcard{width:100%;background:var(--glass);border:1px solid rgba(255,150,0,.18);border-radius:22px;padding:20px;display:flex;flex-direction:column;gap:12px;}
+.fp{font-size:15px;font-weight:600;color:rgba(255,255,255,.88);line-height:1.65;}
+.fp.big{font-size:16px;font-weight:700;color:#fff;}
+.fp.gold{color:rgba(255,200,80,.9);}
+
+.outro{width:100%;text-align:center;background:var(--glass);border:1px solid rgba(255,150,0,.15);border-radius:20px;padding:18px;}
+
+.fpart{position:fixed;pointer-events:none;z-index:1;animation:pf linear infinite;}
+@keyframes pf{0%{opacity:0;transform:translateY(100vh) scale(.5) rotate(0)}10%{opacity:.6}90%{opacity:.3}100%{opacity:0;transform:translateY(-10vh) scale(1) rotate(360deg)}}
+</style>
+</head>
+<body>
+
+<canvas id="bgc"></canvas>
+<div id="flash"></div>
+
+<div id="ach">
+  <span class="ai">🏆</span>
+  <div class="at">ACHIEVEMENT UNLOCKED</div>
+  <div class="an">PROFESSIONAL MENACE DETECTED</div>
+</div>
+
+<!-- SLIDE AREA -->
+<div id="wrap">
+
+  <!-- SLIDE 1 -->
+  <div class="slide active" id="slide-1">
+    <div class="badge">⚠&nbsp;&nbsp;EMERGENCY BROADCAST&nbsp;&nbsp;⚠</div>
+    <div class="mtitle">HAPPY BIRTHDAY<br>MIGGA 🎂</div>
+    <div class="wcard">
+      <div class="whead">🚨 GOVERNMENT WARNING 🚨</div>
+      <div class="wsub">"Another year of survival has been detected."</div>
+      <div style="font-size:9px;font-weight:900;letter-spacing:2px;color:rgba(255,0,60,.6);text-align:center;margin-bottom:10px;">FORMAL CHARGES FILED:</div>
+      <ul class="charges">
+        <li class="ch"><span>💬</span><span>Excessive Yapping — Count: ∞</span></li>
+        <li class="ch"><span>🍔</span><span>Professional Food Thief — Felony Grade</span></li>
+        <li class="ch"><span>🧠</span><span>Public Display of Stupidity — Repeat Offender</span></li>
+        <li class="ch"><span>💀</span><span>Being Ugly in Ultra HD — 4K Evidence</span></li>
+        <li class="ch"><span>🧹</span><span>Suspected Brain-Cell Laundering — Ongoing</span></li>
+      </ul>
+    </div>
+    <div class="mbox">
+      <span style="font-size:60px;display:inline-block;animation:spin 3s linear infinite;">🚨</span>
+      <div style="font-size:22px;font-weight:900;color:var(--red);text-shadow:0 0 10px var(--red);margin:6px 0;letter-spacing:2px;">ALERT LEVEL: MIGGA</div>
+      <div style="font-size:40px;display:inline-block;animation:spin 2s linear infinite reverse;">😂</div>
+      <div style="font-size:12px;color:rgba(255,255,255,.4);margin-top:6px;">National threat assessment: MAXIMUM CHAOS</div>
+    </div>
+    <div class="card" style="text-align:center;border-color:rgba(255,230,0,.15);">
+      <div style="font-size:10px;font-weight:900;letter-spacing:2px;color:var(--yellow);margin-bottom:6px;">STATUS UPDATE</div>
+      <div style="font-size:15px;font-weight:700;color:#fff;">🎂 Threat Age Increased +1 Year 🎂</div>
+      <div style="font-size:12px;color:rgba(255,255,255,.35);margin-top:4px;font-style:italic;">Containment: FAILED (as expected)</div>
+    </div>
+  </div>
+
+  <!-- SLIDE 2 -->
+  <div class="slide" id="slide-2">
+    <div style="width:100%;text-align:center;margin-top:6px;">
+      <div style="font-size:10px;font-weight:900;letter-spacing:3px;color:var(--blue);text-shadow:0 0 10px var(--blue);">CLASSIFIED DOSSIER — CASE NO. 0069</div>
+      <div style="font-size:26px;font-weight:900;color:#fff;letter-spacing:2px;margin-top:2px;">📊 OFFICIAL REPORT</div>
+    </div>
+    <div class="card">
+      <div style="font-size:9px;font-weight:900;letter-spacing:2px;color:rgba(0,195,255,.65);text-align:center;margin-bottom:14px;">SUBJECT ANALYSIS — MIGGA</div>
+      <div style="display:flex;flex-direction:column;gap:12px;" id="srow">
+        <div class="si"><div class="sl"><span>🧠 Intelligence</span><span class="sv" style="color:#ff003c">2%</span></div><div class="sbg"><div class="sf fi" data-w="2"></div></div></div>
+        <div class="si"><div class="sl"><span>🍀 Luck</span><span class="sv" style="color:#00ff88">100%</span></div><div class="sbg"><div class="sf fl" data-w="100"></div></div></div>
+        <div class="si"><div class="sl"><span>💡 Brain Cells</span><span class="sv" style="color:#ffe600">1</span></div><div class="sbg"><div class="sf fb" data-w="1"></div></div></div>
+        <div class="si"><div class="sl"><span>😏 Rizz Level</span><span class="sv" style="color:#ff00aa">CLASSIFIED</span></div><div class="sbg"><div class="sf fr" data-w="69"></div></div></div>
+        <div class="si"><div class="sl"><span>🤔 Decision Making</span><span class="sv" style="color:#ff0000">ERROR 404</span></div><div class="sbg"><div class="sf fe" data-w="5"></div></div></div>
+        <div class="si"><div class="sl"><span>💪 Gym Consistency</span><span class="sv" style="color:#666">MAINTENANCE</span></div><div class="sbg"><div class="sf fm" data-w="0"></div></div></div>
+      </div>
+    </div>
+    <div class="mbox">
+      <span style="font-size:50px;">🤌😭</span>
+      <div style="font-size:20px;font-weight:900;color:var(--blue);letter-spacing:2px;margin-top:6px;">THE AUDACITY.</div>
+      <div style="font-size:12px;color:rgba(255,255,255,.45);margin-top:4px;">Scientists baffled. NASA alarmed. Doctors speechless.</div>
+    </div>
+    <button class="rbtn" id="rbtn">🔥 GENERATE ROAST 🔥</button>
+    <div class="rout" id="rout"></div>
+  </div>
+
+  <!-- SLIDE 3 -->
+  <div class="slide" id="slide-3">
+    <div class="ctitle">☠️ CHAOS MODE ☠️</div>
+    <div class="csub">DO NOT ENGAGE. SERIOUSLY. DON'T.</div>
+    <button id="cbtn">DO NOT<br>PRESS</button>
+    <div class="term" id="term">
+      <div class="tl">$ system.boot — All processes nominal...</div>
+      <div class="tl">$ scanning_subject.exe — Migga detected in vicinity</div>
+    </div>
+    <div class="mbox">
+      <span style="font-size:52px;display:inline-block;animation:spin 2s linear infinite;">💀</span>
+      <div style="font-size:22px;font-weight:900;color:var(--red);letter-spacing:2px;margin-top:6px;">BRUH MOMENT DETECTED</div>
+      <div style="font-size:11px;color:rgba(255,255,255,.4);margin-top:4px;">Initiating emergency protocols...</div>
+    </div>
+    <div class="card" style="border-color:rgba(255,0,60,.15);text-align:center;">
+      <div style="font-size:36px;">🤡🔥💣</div>
+      <div style="font-size:14px;font-weight:700;color:rgba(255,255,255,.7);margin-top:6px;">Chaos Level: <span style="color:var(--red);font-weight:900;">MIGGA TIER</span></div>
+    </div>
+  </div>
+
+  <!-- SLIDE 4 -->
+  <div class="slide" id="slide-4">
+    <div class="cwrap"><div class="cglow"></div><span class="cem">🎂</span></div>
+    <div class="fname">Happy Birthday<br>Migga ❤️</div>
+    <div class="fcard">
+      <p class="fp big">Behind all the roasting, you're genuinely one of the best friends anyone could ask for.</p>
+      <p class="fp">Thanks for all the laughs, the memories, the late-night conversations, and every dumb moment we survived together.</p>
+      <p class="fp">I hope this year brings you success, happiness, good health, money, and everything you've been grinding towards.</p>
+      <p class="fp gold">You deserve every good thing coming your way, brother. 🙏</p>
+    </div>
+    <div class="outro">
+      <div style="font-size:30px;letter-spacing:4px;margin-bottom:10px;">🎉🎊🥳🎈🎁</div>
+      <div style="font-size:26px;font-weight:900;letter-spacing:3px;color:#fff;">STAY AWESOME</div>
+      <div style="font-size:20px;color:rgba(255,255,255,.5);margin-top:6px;font-style:italic;">— with love 💛</div>
+    </div>
+  </div>
+
+</div><!-- end #wrap -->
+
+<!-- NAV BAR -->
+<div id="nav">
+  <button class="nb" id="pbtn" onclick="go(-1)" disabled>← PREV</button>
+  <div id="dots">
+    <div class="dot on"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+  </div>
+  <button class="nb acc" id="nbtn" onclick="go(1)">NEXT →</button>
+</div>
+
+<script>
+/* BG CANVAS */
+const cv=document.getElementById('bgc'),cx=cv.getContext('2d');
+function rsz(){cv.width=innerWidth;cv.height=innerHeight;}rsz();
+window.addEventListener('resize',rsz);
+const pts=Array.from({length:50},()=>({x:Math.random()*innerWidth,y:Math.random()*innerHeight,vx:(Math.random()-.5)*.35,vy:(Math.random()-.5)*.35,r:Math.random()*1.6+.4,h:Math.random()*360,a:Math.random()*.35+.07}));
+(function draw(){
+  cx.clearRect(0,0,cv.width,cv.height);
+  cx.strokeStyle='rgba(255,255,255,0.017)';cx.lineWidth=1;
+  for(let x=0;x<cv.width;x+=44){cx.beginPath();cx.moveTo(x,0);cx.lineTo(x,cv.height);cx.stroke();}
+  for(let y=0;y<cv.height;y+=44){cx.beginPath();cx.moveTo(0,y);cx.lineTo(cv.width,y);cx.stroke();}
+  pts.forEach(p=>{
+    p.x+=p.vx;p.y+=p.vy;
+    if(p.x<0)p.x=cv.width;if(p.x>cv.width)p.x=0;
+    if(p.y<0)p.y=cv.height;if(p.y>cv.height)p.y=0;
+    cx.beginPath();cx.arc(p.x,p.y,p.r,0,Math.PI*2);
+    cx.fillStyle=`hsla(${p.h},100%,60%,${p.a})`;cx.fill();
+    p.h=(p.h+.25)%360;
+  });
+  requestAnimationFrame(draw);
+})();
+
+/* SLIDES */
+let cur=0;
+const slides=document.querySelectorAll('.slide');
+const dots=document.querySelectorAll('.dot');
+const pb=document.getElementById('pbtn');
+const nb=document.getElementById('nbtn');
+
+function go(d){
+  const nx=cur+d;
+  if(nx<0||nx>=slides.length)return;
+  slides[cur].classList.remove('active');
+  if(d>0)slides[cur].classList.add('prev');
+  else slides[cur].classList.remove('prev');
+  dots[cur].classList.remove('on');
+  cur=nx;
+  slides[cur].classList.remove('prev');
+  slides[cur].classList.add('active');
+  slides[cur].scrollTop=0;
+  dots[cur].classList.add('on');
+  pb.disabled=cur===0;
+  nb.disabled=cur===slides.length-1;
+  if(cur===1)animStats();
+  if(cur===3){confetti(60);spawnParts();}
+}
+
+/* SWIPE */
+let tx=0,ty=0;
+document.getElementById('wrap').addEventListener('touchstart',e=>{tx=e.touches[0].clientX;ty=e.touches[0].clientY;},{passive:true});
+document.getElementById('wrap').addEventListener('touchend',e=>{
+  const dx=e.changedTouches[0].clientX-tx,dy=e.changedTouches[0].clientY-ty;
+  if(Math.abs(dx)>Math.abs(dy)&&Math.abs(dx)>45)go(dx<0?1:-1);
+},{passive:true});
+
+/* STATS */
+function animStats(){
+  document.querySelectorAll('.sf').forEach(b=>{
+    b.style.width='0%';
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{b.style.width=b.dataset.w+'%';}));
+  });
+}
+
+/* ROAST */
+const roasts=["😂 Even Google couldn't locate your common sense. Zero results.","💀 Your brain runs on trial software and the license expired years ago.","🚀 NASA is investigating how you're still alive. Results: inconclusive.","🏆 Your last brain cell deserves a Nobel Prize for sheer persistence.","📱 You make tutorial videos look like advanced quantum physics.","🤦 Your IQ and brain cell count are the same number: 1.","🧬 Scientists studied your DNA and concluded evolution skipped a few steps.","😭 Your common sense is so rare, archaeologists are still searching for it.","🔥 You set a personal record: existing. We're genuinely shocked.","📡 Your WiFi is stronger than your decision-making. And your WiFi is trash."];
+document.getElementById('rbtn').addEventListener('click',function(){
+  const o=document.getElementById('rout');
+  o.classList.remove('show');void o.offsetWidth;
+  o.textContent=roasts[Math.floor(Math.random()*roasts.length)];
+  o.classList.add('show');
+});
+
+/* CHAOS */
+const msgs=["⚠ Brain.exe has stopped responding. Attempting restart...","❌ ERROR: Too much stupidity detected in sector 7.","🚨 Emergency meeting required. All departments alerted.","💀 Common sense module: NOT FOUND. Never existed.","🔴 CRITICAL: Chaos levels exceeding safe parameters.","📡 SOS from Migga's last brain cell. Fading fast.","🛑 Migga.exe consuming 100% of available vibes.","⚡ WARNING: Uncontrolled menace energy detected.","🧹 Clearing decision history... FAILED. None found.","🎭 Cringe containment protocols... FAILED.","🆘 All systems DOWN. Cause: Migga.","✅ Diagnosis: Irreversible menace. No cure found."];
+let chaos=false;
+document.getElementById('cbtn').addEventListener('click',function(){
+  if(chaos)return;chaos=true;
+  this.innerHTML='💥 TOO<br>LATE 💥';
+  this.style.background='radial-gradient(circle,#00ff88,#005522)';
+  document.body.classList.add('shaking');
+  setTimeout(()=>document.body.classList.remove('shaking'),560);
+  setTimeout(()=>{const p=document.getElementById('ach');p.classList.add('show');setTimeout(()=>p.classList.remove('show'),3200);},320);
+  confetti(90);
+  const em=['💀','🔥','😂','💥','🤡','☠️','😭','🚨','🎉','👀','💣','🤌','🫡','🤯'];
+  for(let i=0;i<22;i++)setTimeout(()=>flyE(em[Math.floor(Math.random()*em.length)]),i*75);
+  const s3=document.getElementById('slide-3');
+  s3.classList.add('raving');setTimeout(()=>s3.classList.remove('raving'),4500);
+  const term=document.getElementById('term');
+  msgs.forEach((m,i)=>setTimeout(()=>{const d=document.createElement('div');d.className='tl';d.textContent=m;term.appendChild(d);term.scrollTop=term.scrollHeight;},350+i*380));
+  setTimeout(()=>chaos=false,7000);
+});
+
+function flyE(e){
+  const el=document.createElement('div');el.className='fly';el.textContent=e;
+  el.style.cssText=`left:${8+Math.random()*84}vw;bottom:${Math.random()*35}vh;animation-duration:${1.4+Math.random()*2.2}s;`;
+  document.body.appendChild(el);setTimeout(()=>el.remove(),3200);
+}
+
+function confetti(n){
+  const cols=['#ff003c','#ff6a00','#ffe600','#00ff88','#00c3ff','#b200ff','#ff00aa','#fff'];
+  for(let i=0;i<n;i++)setTimeout(()=>{
+    const el=document.createElement('div');el.className='conf';
+    el.style.cssText=`left:${Math.random()*100}vw;top:-10px;width:${6+Math.random()*8}px;height:${6+Math.random()*8}px;background:${cols[Math.floor(Math.random()*cols.length)]};border-radius:${Math.random()>.5?'50%':'2px'};animation-duration:${2+Math.random()*3}s;animation-delay:${Math.random()*.4}s;`;
+    document.body.appendChild(el);setTimeout(()=>el.remove(),6000);
+  },i*17);
+}
+
+let pDone=false;
+function spawnParts(){
+  if(pDone)return;pDone=true;
+  const em=['❤️','💛','✨','🌟','🎉','🎊','💫','🌈','⭐','🎶'];
+  for(let i=0;i<14;i++){
+    const el=document.createElement('div');el.className='fpart';
+    el.textContent=em[Math.floor(Math.random()*em.length)];
+    el.style.cssText=`font-size:${13+Math.random()*20}px;left:${Math.random()*100}vw;animation-duration:${9+Math.random()*12}s;animation-delay:${Math.random()*8}s;`;
+    document.getElementById('slide-4').appendChild(el);
+  }
+}
+</script>
+</body>
+</html>
